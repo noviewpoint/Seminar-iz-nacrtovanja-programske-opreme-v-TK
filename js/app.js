@@ -32,9 +32,13 @@
             })
     }
 
-    function run($location) {
+    function run($location, $rootScope) {
         // ob reloadu se aplikacija vedno postavi na zacetek
         $location.path("/");
+
+        $rootScope.$on("$stateChangeStart", function(event, toState, toParams, fromState, fromParams) {
+            console.log("Application has switched from state", fromState, "to state", toState);
+        });
     }
 
 })();

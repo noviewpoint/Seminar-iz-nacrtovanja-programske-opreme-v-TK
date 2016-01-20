@@ -4,7 +4,7 @@ var rightOrLeftClick = 0;//hrani vrednost, ki programu sporoči, da je bil izved
 var alternativePlay = 0;//za aktiviranje mobilnega načina, prvič mora uporabnik pritisniti števec min, nadaljne pa prazno polje
 
 function getUserInputs() {
-    optionType = 0;
+    optionType = angular.element(document.getElementById("vsebina")).scope().getUserInputs() - 1;
 
     switch (optionType) {
         case 0:
@@ -26,19 +26,6 @@ function getUserInputs() {
         break;
     }
 }
-
-/*function count(givenArray, givenProperty, q, w) {
-
-    var sum = 0;
-    for (i = q-1; i <= q+1; i++) {
-        for (j = w-1; j <= w+1; j++) {
-            if (i >= 0 && j >= 0 && i < rows && j < columns && typeof givenArray[i][j][givenProperty] === "number") {
-                sum += givenArray[i][j][givenProperty];//ne smeš klicat s piko object propertyja
-            }
-        }
-    }
-    return sum;
-}*/
 
 function kontrolna() {
     if (!alternativePlay) {
@@ -94,6 +81,7 @@ function polje() {//objektno
 }
 
 function drawFields() {
+    console.log("Risem polja v DOM");
     globalState = 0;
     stopCount();
     getUserInputs();
@@ -145,8 +133,7 @@ function count(zbirka, lastnost, i, j) {
 
 function funkcijaKlik(event, i, j) {
 
-    _("mr_smiley").className = "win";
-    stopCount();//najprej ustavim stevec, nato berem
+    //stopCount();//najprej ustavim stevec, nato berem
     //obZmagi();
 
     if (globalState == 0) {
@@ -326,14 +313,16 @@ function openEmpties(i,j) {
 
         if(polja[i][j].presteto == 0) {
             _("[" + i + "][" + j + "]").setAttribute("onmousedown", "menjaj();");//preveri in odpre vse prazne sosede v vseh smereh
-            openEmpties(i + 1, j);
-            openEmpties(i, j + 1);
-            openEmpties(i - 1, j);
-            openEmpties(i, j - 1);
-            openEmpties(i + 1,j + 1);
-            openEmpties(i + 1,j - 1);
-            openEmpties(i - 1,j + 1);
-            openEmpties(i - 1,j - 1);
+
+            // v smeri urinega kazalca
+            openEmpties(i - 1,     j); //  S
+            openEmpties(i - 1, j + 1); // SV
+            openEmpties(    i, j + 1); //  V
+            openEmpties(i + 1, j + 1); // JV
+            openEmpties(i + 1,     j); //  J
+            openEmpties(i + 1, j - 1); // JZ
+            openEmpties(    i, j - 1); //  Z
+            openEmpties(i - 1, j - 1); // SZ
         }
     }
 }
@@ -366,76 +355,7 @@ function maliKlik(i, j) {
     }
 }
 
-
-function highscoresAJAX() {
-    var izbranaMožnost = document.getElementById("highscoresType").options[document.getElementById("highscoresType").selectedIndex].text;
-    var xmlhttp;
-    if (window.XMLHttpRequest) {//IE7+
-        xmlhttp = new XMLHttpRequest();
-    }
-    else {//starejši IE
-        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-    }
-    xmlhttp.onreadystatechange=function() {
-        if (xmlhttp.readyState==4 && xmlhttp.status==200) {
-            document.getElementById("highscoresFromDatabase").innerHTML = xmlhttp.responseText;
-        }
-    }
-    xmlhttp.open("GET", "minesweeper/php/highscores.php?d="+izbranaMožnost, true);
-    xmlhttp.send();
-}
-
-function klicAJAX(vnos, time) {
-    if (vnos.length < 16 && vnos != null && vnos != "") {
-    var xmlhttp;
-    if (window.XMLHttpRequest) {//IE7+
-        xmlhttp = new XMLHttpRequest();
-    }
-    else {//starejši IE
-        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-    }//če je skripta geoplugin onemogočena, vrže browser napako "geoplugin_countryName() is not defined"; ajax ne odda strežniku, igra pa stoji
-    xmlhttp.open("POST", "minesweeper/php/highscores.php?q="+vnos+"u7Kls"+time+"u7Kls"+optionType+"u7Kls"+geoplugin_countryName()+"u7Kls"+geoplugin_countryCode(), true);
-    //preko oblike linka sporoči PHPju spremenljivke, ki jih ta potem vpisuje v SQL bazo
-    xmlhttp.send();
-    //_("submitScore").style.visibility = "hidden";
-    //sound(3);
-    //_("gameFields").style.visibility = "visible";
-    //_("submitScore").style.display = "none";
-    drawFields();
-        //_("vrednostIme").style.background="#C98F89";
-
-}
-    else {_("vrednostIme").style.background="#C98F89"; }
-}
-
-
 function obZmagi() {
-
-    var tekst = "Tvoj time je bil: " + _("timer").innerHTML + " sekund. Vpiši svoje ime (največ 15 znakov) za vnos rezultata v highscores: <br />\
-    <input id='vrednostIme' style='position:relative;width:125px;left:95px;top:10px;' type='text'><button type='submit' style='position:relative;\
-     left:100px;top:10px;' onclick='klicAJAX(_(\"vrednostIme\").value, " + (t-1) + ")'>Potrdi</button>";
-    // _("submitScore").innerHTML = tekst;
+    angular.element(document.getElementById("vsebina")).scope().calculateTime(seconds, minutes, hours);
     angular.element(document.getElementById("vsebina")).scope().openModalNewResult();
 }
-
-/* function pause() {
-    if (typeof t == "number") {clearTimeout(t); _("space_game").style.backgroundColor = "black";t = ""+t;}
-    else { t = setTimeout(function(){timedCount()}, 1000);  _("space_game").style.backgroundColor = "#7688B3";}
-}
-
-function pressKeysMP(e) {
-    //alert( "keyCode for the key pressed: " + e.keyCode + "\n" );
-    if (e.keyCode == "77" && typeof t != "string") {goBack();}// M
-    if (e.keyCode == "80" && _("submitScore").innerHTML.length < 100) {pause();}// P
-}
-function goBack() {
-    _("space_menu").classList.remove("invisible");
-    _("highscores").classList.add("invisible");
-    _("space_game").classList.add("invisible");
-}
-function switchToHighscores() {
-    _("space_menu").classList.add("invisible");
-    _("highscores").classList.remove("invisible");
-    _("space_game").classList.add("invisible");
-    highscoresAJAX();
-} */

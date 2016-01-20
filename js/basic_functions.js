@@ -31,14 +31,14 @@ function timedCount() {
 function formatTime() {
 
 	if (seconds > 59) {minutes += 1; seconds = 0;}
-	if (minutes > 59) {hours += 1; minutes = 0;}	
+	if (minutes > 59) {hours += 1; minutes = 0;}
 
 	if (seconds < 10) {var addSec = "0";}
 	else {var addSec = "";}
 	if (minutes < 10) {var addMin = "0";}
-	else {var addMin = "";} 
+	else {var addMin = "";}
 	if (hours < 10) {var addHour = "0";}
-	else {var addHour = "";} 
+	else {var addHour = "";}
 
 	_("timer").innerHTML = addHour + hours + " : " + addMin + minutes + " : " + addSec + seconds;
 }
@@ -46,6 +46,9 @@ function formatTime() {
 function doTimer() {
 	if (!timerIsOn) {
 		timerIsOn = 1;
+        seconds = 0;
+        minutes = 0;
+        hours = 0;
 		timedCount();
 	}
 }
@@ -53,18 +56,9 @@ function doTimer() {
 function stopCount() {
 	clearTimeout(t);
 	timerIsOn = 0;
-	seconds = 0;
-	minutes = 0;
-	hours = 0;
 }
 
 function shuffle(o){ //v1.0
     for(var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
     return o;
-}
-
-function pressKey(e) {
-	//alert( "keyCode for the key pressed: " + e.keyCode + "\n" );
-	if (e.keyCode == "77") {goBack();}// M
-	if (e.keyCode == "80") {pause();}// P
 }

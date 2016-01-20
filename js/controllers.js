@@ -41,21 +41,46 @@
         var self = this; // brez rabe angular.bind
     }
 
-    function ModalInstanceSetDifficultyController($scope, $uibModalInstance) {
+    function ModalInstanceSetDifficultyController($state, $scope, $uibModalInstance, gameSettings) {
         console.log("In controller ModalInstanceSetDifficultyController");
         var self = this; // brez rabe angular.bind
-        self.difficulties = ["Lahko | 9x9 | 10 min", "Srednje | 16x16 | 40 min", "Težko | 30x16 | 99min"];
+
+        self.difficulties = [
+            {
+                "tekst" : "Lahko | 9x9 | 10 min",
+                "index" : 1
+            },
+            {
+                "tekst" : "Srednje | 16x16 | 40 min",
+                "index" : 2
+            },
+            {
+                "tekst" : "Težko | 30x16 | 99min",
+                "index" : 3
+            }
+        ];
+        self.setDifficulty = setDifficulty;
+
+        function setDifficulty(x) {
+            $uibModalInstance.close();
+            console.log(x);
+            gameSettings.setDifficultyIndex(x.index);
+            $state.go("game");
+        }
     }
 
-    function GameController($scope, $uibModal, $state) {
+    function GameController($scope, $uibModal, $state, gameSettings) {
         console.log("In controller GameController");
         var self = this; // brez rabe angular.bind
 
+        /* dostopno iz DOMa prek $scope */
+        $scope.getUserInputs = gameSettings.getDifficultyIndex;
+        $scope.calculateTime = calculateTime;
+        $scope.openModalNewResult = openModalNewResult;
+
         drawFields();
 
-        /* dostopno iz DOMa */
-
-        $scope.openModalNewResult = function() {
+        function openModalNewResult() {
             var modalInstance = $uibModal.open({
                 animation: true,
                 templateUrl: "partials/modal_new_result.html",
@@ -63,14 +88,18 @@
                 controllerAs: "MINRCtrl",
                 size: "lg"
             });
-        };
+        }
+
+        function calculateTime(seconds, minutes, hours) {
+            gameSettings.setTime(seconds, minutes, hours);
+        }
     }
 
     function ModalInstanceNewResultController($scope, $uibModalInstance, $state) {
         console.log("In controller ModalInstanceNewResult");
         var self = this; // brez rabe angular.bind
 
-        $state.reload("game");
+        //$state.reload("game");
     }
 
     function HighscoresController(restService) {
@@ -78,14 +107,11 @@
         var self = this; // brez rabe angular.bind
 
         restService.requestScores()
-            .success(function(data, status, headers, config) {
-                // The API call to the back-end was successful (i.e. a valid session)
-                console.log("Success in function restService.requestScores");
-                self.x = data;
-                console.table(self.x);
-            })
-            .error(function(data, status, headers, config) {
-                console.log("Error in function restService.requestScores");
+            .then(function(response) {
+                console.log("Success in function restService.requestScores", response);
+                self.x = response.data;
+            }, function(reponse) {
+                console.log("Error in function restService.requestScores", response);
             });
     }
 
