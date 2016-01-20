@@ -1,0 +1,30 @@
+<?php
+require_once '../include/config.php';
+$input = json_decode(file_get_contents('php://input'));
+
+/* PDO + prepared statements */
+try
+{
+    $conn = new PDO("mysql:host=".DB_HOST.";dbname=".DB_DATABASE, DB_USER, DB_PASSWORD);
+    // set the PDO error mode to exception
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $conn->exec("set names utf8"); // zagotovi pravilno vpisovanje sumnikov
+
+    $sql = $conn->prepare("INSERT INTO scores (username_scores, difficulty_scores, score_scores, country_scores, acronym_scores) VALUES (:username, :difficulty, :score, :country, :acronym)");
+
+    $sql->bindValue(':username', $input->username);
+    $sql->bindValue(':difficulty', $input->difficulty);
+    $sql->bindValue(':score', $input->score);
+    $sql->bindParam(':country', $input->country);
+    $sql->bindValue(':acronym', $input->acronym);
+
+    $sql->execute();
+    echo "New record created successfully";
+
+}
+catch(PDOException $e)
+{
+    echo $e->getMessage();
+}
+$conn = null;
+?>

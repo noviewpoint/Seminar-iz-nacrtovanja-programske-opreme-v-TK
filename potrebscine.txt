@@ -1,0 +1,7 @@
+lista potrebscin:
+
+https://html5boilerplate.com/ (v5.2.0)
+
+https://angularjs.org/ (1.4.x stable Minified)
+
+https://github.com/angular-ui/ui-router (download v0.2.15 minifed copy-pasta iz browserja)

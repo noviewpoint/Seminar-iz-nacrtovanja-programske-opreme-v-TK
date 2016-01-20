@@ -1,0 +1,263 @@
+#content #minesweeper {
+}
+
+@-webkit-keyframes fadeIn {
+    from { opacity: 0; }
+      to { opacity: 1; }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+      to { opacity: 1; }
+}
+
+.invisible {
+	display:none;/*ne zavzame površine*/
+}
+
+#space {/*options ureja velikost tega*/
+	margin:0 auto;
+	background-color:#7688B3;
+	width:1000px;
+	height:550px;
+	position:relative;
+}
+#top_wrapper {
+	width:400px;
+	margin:0 auto;
+	height:80px;
+	position:relative;
+	background-color:#7688B3;
+}
+#bot_wrapper {
+	margin:0 auto;
+	border-color: black;
+	border-style:solid;
+	border-width: 2px 2px 2px 2px;
+}
+
+#go_back {cursor:pointer; position:absolute; right:0;top:0;width:300px;height:50px;background-color:#1F916B;}
+#go_back:hover {background-color:black;color:white;font-weight:bold;}
+
+
+#space_menu {background-color:grey;width:100%; height:100%; position:relative;
+	-moz-transition: fadeIn 1s;
+	-webkit-animation: fadeIn 1s;
+	-ms-transition: fadeIn 1s;
+	-o-transition: fadeIn 1s;
+    animation: fadeIn 1s;/*prepiše go_back na nek način*/
+}
+#space_menu div { cursor:pointer; width:200px; height:25px; border-radius:25px; margin:0 auto;
+background-color:darkgrey; padding: 10px 0 10px 0; position:absolute; left:400px;
+}
+#space_menu div:hover {background-color:#B5AD93;color:white;font-weight:bold;
+ -moz-transition: all 1s;
+	-webkit-transition: all 1s;
+	-ms-transition: all 1s;
+	-o-transition: all 1s;
+	transition: all 1s;}
+#space_menu #menu_play {top:100px;}
+#space_menu #menu_highscores {top:200px;}
+#space_menu #menu_options {top:300px;}
+#space_menu #menu_exit {top:400px;}
+
+#space_game {background-color: #7688B3;
+		-moz-transition: fadeIn 1s;
+	-webkit-animation: fadeIn 1s;
+	-ms-transition: fadeIn 1s;
+	-o-transition: fadeIn 1s;
+    animation: fadeIn 1s;/*prepiše go_back na nek način*/
+}
+#minskoPolje {
+/*background-color:#5D8AA8;*/
+cursor:pointer;
+text-align:center;
+margin: 0 auto;
+border: 3px solid black;
+}
+#minskoPolje.a {
+border-collapse:separate;/*frej prostor vmes med kvadratki*/
+border-spacing:2px;
+}
+#minskoPolje.b {
+border-collapse:collapse;
+border-spacing:0px;
+}
+#minskoPolje td {
+font-family:Arial,sans-serif;
+border:1px solid black;
+height:35px;
+width:35px;
+min-height:25px;
+min-width:25px;
+line-height:25px;
+text-align:center;
+font-weight:bold;
+font-size:120%;
+    -moz-transition: background-color 0.5s;
+	-webkit-transition: background-color 0.5s;
+	-ms-transition: background-color 0.5s;
+	-o-transition: background-color 0.5s;
+	transition: background-color 0.5s;
+}
+
+.neodprtoPolje {background-color:#A1A1A1;}
+.neodprtoPolje:hover {opacity:0.3;filter:alpha(opacity=30);}/*IE*/
+.rumenaMina {background-color:#C9C9C9; background-image:url("../images/rumenaMina.png"); background-size:100% auto;}
+.rdečaMina {background-color:#C9C9C9; background-image:url("../images/rdecaMina.png"); background-size:100% auto;}
+.zastavica {background-color:#A1A1A1; background-image:url("../images/zastavica.png"); background-size:100% auto;}
+.prekrižanaZastavica {opacity:0.85;background-color:#C9C9C9; background-image:url("../images/prekrizanaZastavica.png"); background-size:100% auto;}
+.razred0 {background-color:#C9C9C9; color: transparent;}/*0 so transparentne, v nekaterih FF se vseeno lahko označijo*/
+.razred1 {background-color:#C9C9C9; color: #677FCF;}
+.razred2 {background-color:#C9C9C9; color: #34AD4A;}
+.razred3 {background-color:#C9C9C9; color: #C94456;}
+.razred4 {background-color:#C9C9C9; color: #1B48E0;}
+.razred5 {background-color:#C9C9C9; color: #E09926;}
+.razred6 {background-color:#C9C9C9; color: #15CED1;}
+.razred7 {background-color:#C9C9C9; color: #D8DE64;}
+.razred8 {background-color:#C9C9C9; color: #E890DB;}
+
+
+
+
+
+div#top_wrapper {
+	margin: 0 auto;
+	height:100px;
+	/*background-color:green;*/
+}
+div#top_innerwrapper {
+	position:relative;
+	margin: 0 auto;
+	width:400px;
+	height:100px;
+	background-color:grey;
+}
+
+/*div#clock {
+background-image:url("../pacman/images/Canvas_animation2.png"); background-size:100% auto;
+}*/
+
+div#mr_smiley.win {
+background-image:url("../images/smileyWin.png"); background-size:100% auto;
+}
+div#mr_smiley.play {
+background-image:url("../images/smileyPlay.png"); background-size:100% auto;
+}
+div#mr_smiley.defeat {
+background-image:url("../images/smileyDefeat.png"); background-size:100% auto;
+}
+/*div#sound.mute {
+background-image:url("../images/off.png"); background-size:60% auto; background-position:center;
+}
+div#sound.unmute {
+background-image:url("../images/on.png"); background-size:60% auto; background-position:center;
+}*/
+
+div#timer {
+	top:35px;
+	font-family:"Segoe UI light","Segoe UI";
+	/*background-color:blue;*/
+position:absolute;
+height:60px;
+width:150px;
+border-radius:20px;
+color:white;
+cursor:default;
+color:white;
+font-size:25px;
+text-align:left;
+}
+div#counter {
+	font-family:"Segoe UI light","Segoe UI";
+	left:300px;
+	top:25px;
+position:absolute;
+border-radius:20px;
+height:50px;
+width:80px;
+color:white;
+cursor:pointer;
+color:white;
+font-size:35px;
+}
+
+div#counter.deaktivirano{background-color:#828EAB;}
+div#counter.deaktivirano:hover{background-color:#999CA3;}
+div#counter.aktivirano{color:orange;}
+div#counter.aktivirano:hover{background-color:#916691;}
+
+div#clock {
+position:absolute;
+width:40px;
+top:30px;
+height:40px;
+left:110px;
+background-repeat:no-repeat;
+}
+div#mr_smiley:hover {
+background-color:black;
+}
+
+div#mr_smiley {
+	position:absolute;
+	top:25px;
+	left:180px;
+width:40px;
+height:40px;
+border-radius:20px;/*da miška lahko pritisne le znotraj "kroga"*/
+background-repeat:no-repeat;
+cursor:pointer;
+}
+div#mr_smiley:hover {
+background-color:black;
+}
+
+input[type="text"] {
+width:50px;
+text-align:center;
+}
+
+
+#submitScore{
+ font-family:Verdana;
+ font-size:14px;
+ background:#A1A1A1;
+ text-align:justify;
+ width:350px;
+ height:100px;
+ margin: 0 auto;
+ border-radius: 5px;
+margin-top:125px;
+padding:25px 25px 25px 25px;
+}
+
+
+#highscoresSelect {
+position:relative;
+margin:0 auto;
+}
+
+#highscoresFromDatabase {/*bolje to kot tabela*/
+background-color:white;
+border:1px solid black;
+margin: 0 auto;
+margin-top:30px;
+text-align:center;
+overflow:scroll;
+height:485px;
+width:600px;
+}
+#highscoresFromDatabase tr:hover {
+background-color:#339966;
+color:white;
+}
+#highscoresFromDatabase th {
+font-size:1.2em;
+text-align:center;
+padding-top:7px;
+padding-bottom:12px;
+background-color:#A7C942;
+color:white;
+width:150px;
+}
