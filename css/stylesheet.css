@@ -166,7 +166,7 @@ color:white;
 cursor:default;
 color:white;
 font-size:25px;
-text-align:left;
+text-align:center;
 }
 div#counter {
 	font-family:"Segoe UI light","Segoe UI";
@@ -178,6 +178,7 @@ height:50px;
 width:80px;
 color:white;
 cursor:pointer;
+text-align: center;
 color:white;
 font-size:35px;
 }

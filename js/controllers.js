@@ -10,11 +10,14 @@
         .controller("ModalInstanceNewResultController", ModalInstanceNewResultController)
         .controller("HighscoresController", HighscoresController);
 
-    function MenuController($scope, $uibModal, $state) {
+    function MenuController($location, $scope, $uibModal, $state) {
         console.log("In controller MenuController");
         var self = this; // brez rabe angular.bind
 
-        self.openModalRules = function() {
+        self.openModalRules = openModalRules;
+        self.openModalSetDifficulty = openModalSetDifficulty;
+
+        function openModalRules() {
             var modalInstance = $uibModal.open({
                 animation: true,
                 templateUrl: "partials/modal_rules.html",
@@ -22,9 +25,9 @@
                 controllerAs: "MIRCtrl",
                 size: "lg"
             });
-        };
+        }
 
-        self.openModalSetDifficulty = function() {
+        function openModalSetDifficulty() {
             var modalInstance = $uibModal.open({
                 animation: true,
                 templateUrl: "partials/modal_set_difficulty.html",
@@ -32,8 +35,7 @@
                 controllerAs: "MISDCtrl",
                 size: "lg"
             });
-        };
-
+        }
     }
 
     function ModalInstanceRulesController($scope, $uibModalInstance) {
@@ -75,7 +77,7 @@
 
         /* dostopno iz DOMa prek $scope */
         $scope.getUserInputs = gameSettings.getDifficultyIndex;
-        $scope.calculateTime = calculateTime;
+        $scope.setTime = gameSettings.setTime;
         $scope.openModalNewResult = openModalNewResult;
 
         drawFields();
@@ -89,15 +91,13 @@
                 size: "lg"
             });
         }
-
-        function calculateTime(seconds, minutes, hours) {
-            gameSettings.setTime(seconds, minutes, hours);
-        }
     }
 
-    function ModalInstanceNewResultController($scope, $uibModalInstance, $state) {
+    function ModalInstanceNewResultController($scope, $uibModalInstance, $state, gameSettings) {
         console.log("In controller ModalInstanceNewResult");
         var self = this; // brez rabe angular.bind
+
+        $scope.getTime = gameSettings.getTime();
 
         //$state.reload("game");
     }

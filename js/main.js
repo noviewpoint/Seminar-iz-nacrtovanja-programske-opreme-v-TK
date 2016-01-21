@@ -356,6 +356,6 @@ function maliKlik(i, j) {
 }
 
 function obZmagi() {
-    angular.element(document.getElementById("vsebina")).scope().calculateTime(seconds, minutes, hours);
+    angular.element(document.getElementById("vsebina")).scope().setTime(seconds, minutes, hours);
     angular.element(document.getElementById("vsebina")).scope().openModalNewResult();
 }
