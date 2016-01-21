@@ -16,10 +16,10 @@
 
         return {
             postScore: function(x) {
-                return $http({method: "POST", url: "http://nacomnet.lucami.org/test/api/php/post_score.php", data: x});
+                return $http({method: "POST", url: "http://nacomnet.lucami.org/test/PKPPZ/api/php/post_score.php", data: x});
             },
             requestScores: function() {
-                return $http({method: "GET", url: "http://nacomnet.lucami.org/test/api/php/request_scores.php"});
+                return $http({method: "GET", url: "http://nacomnet.lucami.org/test/PKPPZ/api/php/request_scores.php"});
             }
         };
     }

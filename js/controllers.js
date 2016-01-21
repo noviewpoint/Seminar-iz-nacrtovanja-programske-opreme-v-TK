@@ -88,18 +88,40 @@
                 templateUrl: "partials/modal_new_result.html",
                 controller: "ModalInstanceNewResultController",
                 controllerAs: "MINRCtrl",
-                size: "lg"
+                size: "lg",
+                resolve: {
+                    wtf: function() {
+                        return $scope
+                    }
+                }
             });
         }
     }
 
-    function ModalInstanceNewResultController($scope, $uibModalInstance, $state, gameSettings) {
+    function ModalInstanceNewResultController($scope, $uibModalInstance, $state, gameSettings, $timeout) {
         console.log("In controller ModalInstanceNewResult");
         var self = this; // brez rabe angular.bind
 
-        $scope.getTime = gameSettings.getTime();
+        self.getTime = gameSettings.getTime();
+        self.okModal = okModal;
+        self.cancelModal = cancelModal;
+
+        $timeout(function() {
+            $("#vpisiIme").focus();
+        }, 10);
+
+        function okModal() {
+            $uibModalInstance.close();
+            $state.reload("game");
+        }
+
+        function cancelModal() {
+            $uibModalInstance.dismiss('cancel');
+            $state.reload("game");
+        }
 
         //$state.reload("game");
+        //$uibModalInstance.close();
     }
 
     function HighscoresController(restService) {
