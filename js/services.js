@@ -16,6 +16,7 @@
 
         return {
             postScore: function(x) {
+                console.log("V post score", x);
                 return $http({method: "POST", url: "php/post_score.php", data: x});
             },
             requestScores: function() {

@@ -98,10 +98,11 @@
         }
     }
 
-    function ModalInstanceNewResultController($scope, $uibModalInstance, $state, gameSettings, $timeout) {
+    function ModalInstanceNewResultController($scope, $uibModalInstance, $state, gameSettings, $timeout, restService) {
         console.log("In controller ModalInstanceNewResult");
         var self = this; // brez rabe angular.bind
 
+        self.vnos = "David";
         self.getTime = gameSettings.getTime();
         self.okModal = okModal;
         self.cancelModal = cancelModal;
@@ -111,6 +112,15 @@
         }, 10);
 
         function okModal() {
+            console.log(self.vnos);
+            var poslano = {
+                username: self.vnos,
+                difficulty: gameSettings.getDifficultyIndex(),
+                score: self.getTime.hours * 3600 + self.getTime.minutes * 60 + self.getTime.seconds,
+                country: "ZLOVENIJA",
+                acronym: "zl"
+            };
+            restService.postScore(poslano);
             $uibModalInstance.close();
             $state.reload("game");
         }

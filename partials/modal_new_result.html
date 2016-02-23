@@ -2,7 +2,7 @@
     <h3 class="modal-title">Čestitam, uspelo ti je! Tvoj rezultat je bil {{MINRCtrl.getTime.hours}}:{{MINRCtrl.getTime.minutes}}:{{MINRCtrl.getTime.seconds}}.</h3>
 </div>
 <div id="myModal" class="modal-body">
-poslji rezultat v bazo z username: <input type="text" id="vpisiIme"></input>
+poslji rezultat v bazo z username: <input type="text" id="vpisiIme" ng-model="MINRCtrl.vnos"></input>
 </div>
 <div class="modal-footer">
     <button class="btn btn-primary" type="button" ng-click="MINRCtrl.okModal()">OK</button>

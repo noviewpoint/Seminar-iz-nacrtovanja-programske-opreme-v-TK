@@ -108,25 +108,26 @@ body.neDaSeIzbratiTeksta {
     background-color: #7688B3;
 }
 
+body, html {
+    height: 100%; /* da otroci divi zasedajo celoted prostor */
+    width: 100%;
+}
+
 div#vsebina {
     font-family: "Lucida Console", Monaco, monospace;
     height: 100%;
     width: 100%;
-}
 
-div.vertikalnoCentriranje {
-    position: relative;
-    top: 50%;
-    transform: translateY(-60%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 400px;
+    min-width: 400px;
 }
 
 .freespaceAtTheTop {
     height: 10px;
-}
-
-body, html {
-    height: 100%; /* da otroci divi zasedajo celoted prostor */
-    width: 100%;
 }
 
 button.mojGumbMinolovec {
