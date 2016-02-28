@@ -23,6 +23,7 @@ var timerIsOn = 0;
 var t = 0;
 
 function timedCount() {
+    console.log("čas je", seconds, minutes, hours);
 	seconds += 1;
 	formatTime();
 	t = setTimeout(function(){timedCount()}, 1000);//kliče samega sebe s 1000ms timeouta, merilec časa
@@ -54,6 +55,7 @@ function doTimer() {
 }
 
 function stopCount() {
+    console.log("ugašam števec časa");
 	clearTimeout(t);
 	timerIsOn = 0;
 }

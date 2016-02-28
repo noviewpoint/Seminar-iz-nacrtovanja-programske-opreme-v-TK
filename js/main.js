@@ -133,8 +133,8 @@ function count(zbirka, lastnost, i, j) {
 
 function funkcijaKlik(event, i, j) {
 
-    stopCount();//najprej ustavim stevec, nato berem
-    obZmagi();
+    //stopCount();//najprej ustavim stevec, nato berem
+    //obZmagi();
 
     if (globalState == 0) {
 

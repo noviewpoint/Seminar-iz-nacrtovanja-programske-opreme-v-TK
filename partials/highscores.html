@@ -1,7 +1,32 @@
 <div>
-    <table style="margin: 0 auto;">
-        <tr ng-repeat="i in HighscoresCtrl.x">
-            <td style="border: 1px solid black; background-color: orange;" ng-repeat="(key, val) in i">{{key}}: {{val}}</td>
+    <p><a ng-click="sortField = '1'">1</a></p>
+    <p><a ng-click="sortField = '2'">2</a></p>
+    <p><a ng-click="sortField = '3'">3</a></p>
+</div>
+
+<select>
+  <option ng-click="sortField = '1'">Lahko</option>
+  <option ng-click="sortField = '2'">Srednje</option>
+  <option ng-click="sortField = '3'">Težko</option>
+</select>
+
+<!--
+
+However, ngOptions provides some benefits such as reducing memory and increasing speed by not creating a new scope for each repeated instance, as well as providing more flexibility in how the <select>'s model is assigned via the select as part of the comprehension expression. ngOptions should be used when the <select> model needs to be bound to a non-string value. This is because an option element can only be bound to string values at present.
+
+-->
+
+<div style="width: 50%; border: 1px solid black;">
+    <table id="highscores">
+        <tr>
+            <th>Ime</th>
+            <th>Težavnost</th>
+            <th>Čas</th>
+            <th>Država</th>
+            <th>Zastavica</th>
+        </tr>
+        <tr ng-repeat="i in HighscoresCtrl.x | filter: {difficulty_scores : sortField} | orderBy: 'parseInt(users_fk_scores)'">
+            <td ng-repeat="(key, val) in i">{{val}}</td>
         </tr>
     </table>
 </div>

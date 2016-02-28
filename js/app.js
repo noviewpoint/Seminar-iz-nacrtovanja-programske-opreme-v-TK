@@ -2,7 +2,7 @@
     "use strict";
 
     angular
-        .module("minesweeper", ["ui.router", "ui.bootstrap"])
+        .module("minesweeper", ["ui.router", "ui.bootstrap", "ngCookies"])
         .config(config)
         .run(run);
 
@@ -12,8 +12,14 @@
             .otherwise("/");
 
         $stateProvider
-            .state("menu", {
+            .state("prijava", {
                 url: "/",
+                templateUrl: "partials/prijava.html",
+                controller: "PrijavaController",
+                controllerAs: "PrijavaCtrl"
+            })
+            .state("menu", {
+                url: "/menu",
                 templateUrl: "partials/menu.html",
                 controller: "MenuController",
                 controllerAs: "MenuCtrl"

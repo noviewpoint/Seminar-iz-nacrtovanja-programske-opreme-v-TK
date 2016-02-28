@@ -4,35 +4,61 @@
     angular
         .module("minesweeper")
         .service("restService", restService)
-        .service("gameSettings", gameSettings);
+        .service("gameSettingsService", gameSettingsService);
 
     function restService($http) {
-        console.log("In service restService");
-        var self = this; // brez rabe angular.bind
-
-        // vse spodaj so ASYNCANI REQUESTI!
-        // privzeto angularjs naredi headers: {"Content-Type": "application/json"}
-        // GET caching in browser
+        console.log("In restService");
 
         return {
-            postScore: function(x) {
-                console.log("V post score", x);
-                return $http({method: "POST", url: "php/post_score.php", data: x});
-            },
-            requestScores: function() {
-                return $http({method: "GET", url: "php/request_scores.php"});
-            }
-        };
+            postScore: postScore,
+            requestScores: requestScores,
+            postFormRegister: postFormRegister,
+            postFormLogin: postFormLogin,
+            dobiPonije: dobiPonije
+        }
+
+        // vse spodaj so ASYNCANI REQUESTI!
+        // privzeto angular naredi headers: {"Content-Type": "application/json"}
+        // GET caching in browser
+
+        function postScore(x) {
+            console.log("V post score", x);
+            return $http({method: "POST", url: "http://www.genics.eu/androidApp/php/post_score.php", data: x});
+        }
+        function requestScores() {
+            return $http({method: "GET", url: "http://www.genics.eu/androidApp/php/request_scores.php"});
+        }
+        function postFormRegister(x) {
+            return $http({
+                method: "POST",
+                url: "php/registracija.php",
+                data: "username=" + encodeURIComponent(x.js_username) + "&password=" + encodeURIComponent(x.js_password) + "&country=" + encodeURIComponent(x.js_country),
+                headers: {'Content-Type' : 'application/x-www-form-urlencoded'}
+            });
+            // header tak ker gre za form serialized data?
+        }
+        function postFormLogin(x) {
+            return $http({
+                method: "POST",
+                url: "php/prijava.php",
+                data: "username=" + encodeURIComponent(x.js_username) + "&password=" + encodeURIComponent(x.js_password) + "&country=" + encodeURIComponent(x.js_country),
+                headers: {'Content-Type' : 'application/x-www-form-urlencoded'}
+            });
+            // header tak ker gre za form serialized data?
+        }
+
+        function dobiPonije() {
+            return $http({method: "GET", url: "js/poniji.json"});
+        }
+
     }
 
-    function gameSettings() {
-        console.log("In service gameSettings");
-        var self = this; // brez rabe angular.bind
+    function gameSettingsService() {
+        console.log("In gameSettingsService");
 
-        self.difficultyIndex = 0;
-        self.seconds = 0;
-        self.minutes = 0;
-        self.hours = 0;
+        var difficultyIndex = 0;
+
+        var time = 0;
 
         return {
             getDifficultyIndex: getDifficultyIndex,
@@ -43,26 +69,19 @@
         };
 
         function getDifficultyIndex() {
-            return self.difficultyIndex;
+            return difficultyIndex;
         }
 
         function setDifficultyIndex(x) {
-            self.difficultyIndex = x;
+            difficultyIndex = x;
         }
 
         function getTime() {
-            return {
-                seconds: self.seconds,
-                minutes: self.minutes,
-                hours: self.hours
-            };
+            return time;
         }
 
-        function setTime(seconds, minutes, hours) {
-            console.log("Angular prejel cas", seconds, minutes, hours);
-            self.seconds = seconds;
-            self.minutes = minutes;
-            self.hours = hours;
+        function setTime(x) {
+            time = x;
         }
     }
 

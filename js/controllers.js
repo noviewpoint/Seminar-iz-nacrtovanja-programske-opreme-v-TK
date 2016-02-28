@@ -8,10 +8,11 @@
         .controller("ModalInstanceSetDifficultyController", ModalInstanceSetDifficultyController)
         .controller("GameController", GameController)
         .controller("ModalInstanceNewResultController", ModalInstanceNewResultController)
-        .controller("HighscoresController", HighscoresController);
+        .controller("HighscoresController", HighscoresController)
+        .controller("PrijavaController", PrijavaController);
 
     function MenuController($location, $scope, $uibModal, $state) {
-        console.log("In controller MenuController");
+        console.log("In MenuController");
         var self = this; // brez rabe angular.bind
 
         self.openModalRules = openModalRules;
@@ -39,12 +40,12 @@
     }
 
     function ModalInstanceRulesController($scope, $uibModalInstance) {
-        console.log("In controller ModalInstanceRulesController");
+        console.log("In ModalInstanceRulesController");
         var self = this; // brez rabe angular.bind
     }
 
-    function ModalInstanceSetDifficultyController($state, $scope, $uibModalInstance, gameSettings) {
-        console.log("In controller ModalInstanceSetDifficultyController");
+    function ModalInstanceSetDifficultyController($state, $scope, $uibModalInstance, gameSettingsService) {
+        console.log("In ModalInstanceSetDifficultyController");
         var self = this; // brez rabe angular.bind
 
         self.difficulties = [
@@ -65,19 +66,18 @@
 
         function setDifficulty(x) {
             $uibModalInstance.close();
-            console.log(x);
-            gameSettings.setDifficultyIndex(x.index);
+            gameSettingsService.setDifficultyIndex(x.index);
             $state.go("game");
         }
     }
 
-    function GameController($scope, $uibModal, $state, gameSettings) {
-        console.log("In controller GameController");
+    function GameController($scope, $uibModal, $state, gameSettingsService) {
+        console.log("In GameController");
         var self = this; // brez rabe angular.bind
 
         /* dostopno iz DOMa prek $scope */
-        $scope.getUserInputs = gameSettings.getDifficultyIndex;
-        $scope.setTime = gameSettings.setTime;
+        $scope.getUserInputs = gameSettingsService.getDifficultyIndex;
+        $scope.setTime = gameSettingsService.setTime;
         $scope.openModalNewResult = openModalNewResult;
 
         drawFields();
@@ -98,12 +98,12 @@
         }
     }
 
-    function ModalInstanceNewResultController($scope, $uibModalInstance, $state, gameSettings, $timeout, restService) {
-        console.log("In controller ModalInstanceNewResult");
+    function ModalInstanceNewResultController($scope, $uibModalInstance, $state, gameSettingsService, $timeout, restService) {
+        console.log("In ModalInstanceNewResultController");
         var self = this; // brez rabe angular.bind
 
         self.vnos = "David";
-        self.getTime = gameSettings.getTime();
+        self.getTime = gameSettingsService.getTime();
         self.okModal = okModal;
         self.cancelModal = cancelModal;
 
@@ -115,10 +115,8 @@
             console.log(self.vnos);
             var poslano = {
                 username: self.vnos,
-                difficulty: gameSettings.getDifficultyIndex(),
-                score: self.getTime.hours * 3600 + self.getTime.minutes * 60 + self.getTime.seconds,
-                country: "ZLOVENIJA",
-                acronym: "zl"
+                difficulty: gameSettingsService.getDifficultyIndex(),
+                score: self.getTime
             };
             restService.postScore(poslano);
             $uibModalInstance.close();
@@ -135,7 +133,7 @@
     }
 
     function HighscoresController(restService) {
-        console.log("In controller HighscoresController");
+        console.log("In HighscoresController");
         var self = this; // brez rabe angular.bind
 
         restService.requestScores()
@@ -145,6 +143,75 @@
             }, function(reponse) {
                 console.log("Error in function restService.requestScores", response);
             });
+    }
+
+    function PrijavaController($cookies, restService, $http, $q) {
+        console.log("In PrijavaController");
+        var vm = this;
+
+        vm.postFormRegister = postFormRegister;
+        vm.postFormLogin = postFormLogin;
+        vm.poniji;
+
+        function postFormRegister()  {
+            console.log("In function postFormRegister");
+            restService.postFormRegister(vm.piskot).
+                then(function(successResponse) {
+                    console.log("It's a success :)", successResponse.data);
+                }, function(errorResponse) {
+                    console.log("It's an error :('", errorResponse);
+                });
+        }
+
+        function postFormLogin()  {
+            console.log("In function postFormLogin");
+            restService.postFormLogin(vm.piskot).
+                then(function(successResponse) {
+                    console.log("It's a success :)", successResponse.data);
+                }, function(errorResponse) {
+                    console.log("It's an error :('", errorResponse);
+                });
+        }
+
+        //$cookies.put("geslo", "abc123");
+        //$cookies.remove("geslo", []);
+
+        var x = {
+            "js_username" : "markoskace",
+            "js_password" : "plaintextmothaphucker",
+            "js_country" : "Slovenija"
+        };
+
+        // za koliko casa se shrani piskot?
+        //$cookies.putObject("uporabniskiPodatki", x, []);
+
+        vm.piskot = $cookies.getObject("uporabniskiPodatki");
+
+        /*restService.dobiPonije()
+        .then(function(successResponse) {
+            console.log("dobil ponije");
+            vm.poniji = successResponse.data;
+        });*/
+
+        var getPoneys = function() {
+
+            var defer = $q.defer();
+
+            $http.get("js/poniji.json")
+                .then(function(successResponse) {
+                    console.log("dobil ponije success");
+                    defer.resolve(successResponse.data);
+                }, function(errorResponse) {
+                    console.log("dobil ponije error");
+                    defer.reject(successResponse.data);
+                });
+
+            return defer.promise;
+        };
+
+        vm.poniji = getPoneys();
+
+
     }
 
 })();

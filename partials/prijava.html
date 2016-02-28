@@ -1,0 +1,47 @@
+<div>
+
+
+
+
+
+
+
+    <!--
+
+    <input ng-value="PrijavaCtrl.piskot.id_user" type="text" class="" style="margin: 0 auto; display: block; min-width: 220px" />
+    <input ng-value="PrijavaCtrl.piskot.geslo"type="text" class="" style="margin: 0 auto; display: block; min-width: 220px" />
+
+    -->
+
+
+    <!-- brez action="xxx.php" ker gre za angularjs form-->
+    <form method="post" ng-submit="PrijavaCtrl.postFormRegister()">
+        <input type="text" name="username" placeholder="enter ime!" ng-model="PrijavaCtrl.piskot.js_username" />
+        <input type="text" name="password" placeholder="enter geslo!" ng-model="PrijavaCtrl.piskot.js_password"/>
+        <input type="text" name="country" placeholder="enter drzava!" ng-model="PrijavaCtrl.piskot.js_country"/>
+        <input type="submit" value="register" />
+    </form>
+
+    <!-- brez action="xxx.php" ker gre za angularjs form-->
+    <form method="post" ng-submit="PrijavaCtrl.postFormLogin()">
+        <input type="text" name="username" placeholder="enter ime!" ng-model="PrijavaCtrl.piskot.js_username" />
+        <input type="text" name="password" placeholder="enter geslo!" ng-model="PrijavaCtrl.piskot.js_password"/>
+        <input type="text" name="country" placeholder="enter drzava!" ng-model="PrijavaCtrl.piskot.js_country"/>
+        <input type="submit" value="login" />
+    </form>
+
+    <!-- da pusti v json obliki pretty print technique-->
+    <!--<pre>{{PrijavaCtrl.piskot | json}}</pre>-->
+
+    Moji poniji:
+    {{PrijavaCtrl.poniji}}
+
+
+
+
+
+
+    <button type="button" class="btn btn-default btn-block mojGumbMinolovec">Prijavi se</button>
+    <button type="button" class="btn btn-default btn-block mojGumbMinolovec">Registriraj se</button>
+    <img style="display: block; margin: 40px auto 0 auto;" src="images/mina_happy.png" />
+</div>

@@ -2,6 +2,7 @@
 require_once '../include/config.php';
 $input = json_decode(file_get_contents('php://input'));
 
+echo "comeone";
 /* PDO + prepared statements */
 try
 {
@@ -10,13 +11,11 @@ try
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $conn->exec("set names utf8"); // zagotovi pravilno vpisovanje sumnikov
 
-    $sql = $conn->prepare("INSERT INTO scores (username_scores, difficulty_scores, score_scores, country_scores, acronym_scores) VALUES (:username, :difficulty, :score, :country, :acronym)");
+    $sql = $conn->prepare("INSERT INTO scores (users_fk, difficulty_scores, score_scores) VALUES ((SELECT id_users FROM users WHERE username_users = :username), :difficulty, :score)");
 
     $sql->bindValue(':username', $input->username);
     $sql->bindValue(':difficulty', $input->difficulty);
     $sql->bindValue(':score', $input->score);
-    $sql->bindParam(':country', $input->country);
-    $sql->bindValue(':acronym', $input->acronym);
 
     $sql->execute();
     echo "New record created successfully";
