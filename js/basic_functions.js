@@ -23,7 +23,6 @@ var timerIsOn = 0;
 var t = 0;
 
 function timedCount() {
-    console.log("čas je", seconds, minutes, hours);
 	seconds += 1;
 	formatTime();
 	t = setTimeout(function(){timedCount()}, 1000);//kliče samega sebe s 1000ms timeouta, merilec časa
@@ -41,7 +40,12 @@ function formatTime() {
 	if (hours < 10) {var addHour = "0";}
 	else {var addHour = "";}
 
-	_("timer").innerHTML = addHour + hours + " : " + addMin + minutes + " : " + addSec + seconds;
+    var x = seconds + 60*minutes + 3600*hours;
+    if (x <1000) {
+        _("timer").innerHTML = x;
+    }
+
+	//_("timer").innerHTML = addHour + hours + " : " + addMin + minutes + " : " + addSec + seconds;
 }
 
 function doTimer() {
@@ -58,6 +62,7 @@ function stopCount() {
     console.log("ugašam števec časa");
 	clearTimeout(t);
 	timerIsOn = 0;
+    console.log("Cas je", seconds, minutes, hours);
 }
 
 function shuffle(o){ //v1.0

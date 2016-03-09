@@ -133,6 +133,7 @@ function count(zbirka, lastnost, i, j) {
 
 function funkcijaKlik(event, i, j) {
 
+    // 2 stavka za debugiranje z bazo; instanta zmaga ob prvem kliku!
     //stopCount();//najprej ustavim stevec, nato berem
     //obZmagi();
 
@@ -356,6 +357,8 @@ function maliKlik(i, j) {
 }
 
 function obZmagi() {
-    angular.element(document.getElementById("vsebina")).scope().setTime(seconds, minutes, hours);
+    angular.element(document.getElementById("vsebina")).scope().setTime(seconds+60*minutes+3600*hours);
+    //angular.element(document.getElementById("vsebina")).scope().setTime(13);
+
     angular.element(document.getElementById("vsebina")).scope().openModalNewResult();
 }

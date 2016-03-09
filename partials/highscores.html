@@ -1,32 +1,38 @@
-<div>
-    <p><a ng-click="sortField = '1'">1</a></p>
-    <p><a ng-click="sortField = '2'">2</a></p>
-    <p><a ng-click="sortField = '3'">3</a></p>
-</div>
-
-<select>
-  <option ng-click="sortField = '1'">Lahko</option>
-  <option ng-click="sortField = '2'">Srednje</option>
-  <option ng-click="sortField = '3'">Težko</option>
-</select>
-
 <!--
 
 However, ngOptions provides some benefits such as reducing memory and increasing speed by not creating a new scope for each repeated instance, as well as providing more flexibility in how the <select>'s model is assigned via the select as part of the comprehension expression. ngOptions should be used when the <select> model needs to be bound to a non-string value. This is because an option element can only be bound to string values at present.
 
 -->
 
-<div style="width: 50%; border: 1px solid black;">
-    <table id="highscores">
-        <tr>
-            <th>Ime</th>
-            <th>Težavnost</th>
-            <th>Čas</th>
-            <th>Država</th>
-            <th>Zastavica</th>
-        </tr>
-        <tr ng-repeat="i in HighscoresCtrl.x | filter: {difficulty_scores : sortField} | orderBy: 'parseInt(users_fk_scores)'">
-            <td ng-repeat="(key, val) in i">{{val}}</td>
-        </tr>
-    </table>
+<!--<pre>{{HighscoresCtrl.tezavnost | json}}</pre>-->
+
+<!--<select ng-model="HighscoresCtrl.tezavnost" style="width: 25%;" type="text" name="tezavnost" ng-options="x.name for x in HighscoresCtrl.tezavnosti"></select>-->
+<div class="centriranje">
+    <div style="width: 50%; font-size: 1.5em; margin-bottom: 10px; font-size: 30px; text-align: center;">
+        Najboljši rezultati<img src="images/pokalcic.png" />
+    </div>
+    <div style="width: 50%; font-size: 1.5em; margin-bottom: 10px;">
+        <button id="userjeveTezavnosti" ng-click="HighscoresCtrl.userjeveTezavnosti();" class="izbiraTezavnosti">MOJI</button>
+        <button ng-click="HighscoresCtrl.tezavnost = 1;" class="izbiraTezavnosti">LAHKO</button>
+        <button ng-click="HighscoresCtrl.tezavnost = 2;" class="izbiraTezavnosti">SREDNJE</button>
+        <button ng-click="HighscoresCtrl.tezavnost = 3;" class="izbiraTezavnosti">TEŽKO</button>
+    </div>
+
+    <div style="height: 75%; width: 75%; border: 1px solid black; font-size: 1.2em; background-color: white;overflow-y: auto;">
+        <table id="highscores">
+            <tr>
+                <th style="width:33%;">Ime</th>
+                <th style="width:33%;">Čas</th>
+                <th style="width:33%;">Država</th>
+            </tr>
+            <tr ng-repeat="i in HighscoresCtrl.rezultati | filter : {difficulty_scores : HighscoresCtrl.tezavnost} | orderBy: 'parseInt(users_fk_scores)'">
+
+                <td>{{i.username_users}}</td>
+                <td>{{i.score_scores}}</td>
+                <td style="text-align: left;"><img style="float:left; padding-left: 30px;" ng-src="images/flags/{{i.acronym_countries}}.png" />&nbsp&nbsp&nbsp{{i.name_countries}}</td>
+                <!--<td ng-repeat="(key, val) in i">{{val}}</td>
+                <td><img src="images/flags/{{i.acronym_countries}}.png" /></td>-->
+            </tr>
+        </table>
+    </div>
 </div>

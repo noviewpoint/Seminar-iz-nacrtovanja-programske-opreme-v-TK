@@ -183,10 +183,10 @@ color:white;
 font-size:35px;
 }
 
-div#counter.deaktivirano{background-color:#828EAB;}
+/*div#counter.deaktivirano{background-color:#828EAB;}
 div#counter.deaktivirano:hover{background-color:#999CA3;}
 div#counter.aktivirano{color:orange;}
-div#counter.aktivirano:hover{background-color:#916691;}
+div#counter.aktivirano:hover{background-color:#916691;}*/
 
 div#clock {
 position:absolute;

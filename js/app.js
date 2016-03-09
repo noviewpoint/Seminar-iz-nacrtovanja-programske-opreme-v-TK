@@ -6,7 +6,11 @@
         .config(config)
         .run(run);
 
-    function config($urlRouterProvider, $stateProvider) {
+    function config($urlRouterProvider, $stateProvider, $httpProvider) {
+
+        // omogoci, da ob requestih angular zraven v headerju posilja Cookie s SessionID
+        $httpProvider.defaults.withCredentials = true;
+
         // For any unmatched url, redirect
         $urlRouterProvider
             .otherwise("/");
@@ -17,6 +21,12 @@
                 templateUrl: "partials/prijava.html",
                 controller: "PrijavaController",
                 controllerAs: "PrijavaCtrl"
+            })
+            .state("registracija", {
+                url: "/registracija",
+                templateUrl: "partials/registracija.html",
+                controller: "RegistracijaController",
+                controllerAs: "RegistracijaCtrl"
             })
             .state("menu", {
                 url: "/menu",

@@ -1,0 +1,16 @@
+<div class="centriranje">
+    <!-- brez action="xxx.php" ker gre za angularjs form-->
+    <form style="max-width: 300px; text-align: center;" method="post" ng-submit="RegistracijaCtrl.postFormRegister()">
+        <h2 style="display:block; height: 100px; margin-bottom: 40px;">Tukaj si lahko ustvariš račun</h2>
+        <input class="form-control" style="text-align: center; float: left; width: 75%;" type="text" name="username" placeholder="Vpiši ime" ng-model="RegistracijaCtrl.dataModel.username" />
+        <select name="country" ng-model="RegistracijaCtrl.dataModel.country" style="width: 25%;" class="form-control" type="text" name="country" ng-options="x.name_countries for x in RegistracijaCtrl.countries"></select>
+        <input class="form-control" style="text-align: center; margin: 5px 0 5px 0;" type="password" name="password" placeholder="Vpiši geslo" ng-model="RegistracijaCtrl.dataModel.password"/>
+        <input class="form-control" style="text-align: center; margin: 5px 0 30px 0;" type="password" name="password" placeholder="Vpiši geslo" ng-model="RegistracijaCtrl.passwordDrugic"/>
+        <button type="submit" value="register" class="btn btn-primary btn-lg btn-block mojGumbMinolovec">Registriraj se</button>
+    </form>
+
+    <!--<pre>{{RegistracijaCtrl.dataModel | json}}</pre>-->
+
+    <img style="display: block; margin: 72px auto 0 auto;" src="images/mina_happy.png" />
+
+</div>
